@@ -25,6 +25,7 @@ resource "aws_vpc" "EDU-VPC" {
 resource "aws_subnet" "public-subnet" {
   vpc_id = aws_vpc.EDU-VPC.id
   cidr_block = "10.0.1.0/24"
+  availability_zone       = "ap-northeast-2a"
 
   tags = {
     Name = "public-subnet"
@@ -60,6 +61,30 @@ resource "aws_route_table" "Public-Route" {
   }
 }
 
+resource "aws_security_group" "EDU-SG" {
+  name = "EDU-security-group"
+
+  vpc_id = aws_vpc.EDU-VPC.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name    = "EDU-SG"
+  }
+}
+
 resource "aws_instance" "EC2-EDU" {
   ami = "ami-0e17ad9abf7e5c818"
   instance_type = "t2.micro"
@@ -68,6 +93,8 @@ resource "aws_instance" "EC2-EDU" {
     network_interface_id = aws_network_interface.foo.id
     device_index         = 0
   }
+
+  vpc_security_group_ids = [aws_security_group.EDU-SG.id]
 
   tags = {
     Name = "EC2-EDU"
