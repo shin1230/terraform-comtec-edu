@@ -39,6 +39,27 @@ resource "aws_network_interface" "foo" {
   }
 }
 
+resource "aws_internet_gateway" "EDU-IGW" {
+  vpc_id = aws_vpc.EDU-VPC.id
+
+  tags = {
+    Name    = "EDU-IGW"
+  }
+}
+
+resource "aws_route_table" "Public-Route" {
+  vpc_id = aws_vpc.EDU-VPC.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.EDU-IGW.id
+  }
+
+  tags = {
+    Name    = "EDU-Public-Route"
+  }
+}
+
 resource "aws_instance" "EC2-EDU" {
   ami = "ami-0e17ad9abf7e5c818"
   instance_type = "t2.micro"
