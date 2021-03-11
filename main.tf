@@ -63,14 +63,13 @@ resource "aws_route_table" "Public-Route" {
 
 
 resource "aws_subnet" "Public-A" {
-  vpc_id                  = aws_vpc.PROD-VPC.id
+  vpc_id                  = aws_vpc.EDU-VPC.id
   cidr_block              = var.Subnet-A_prefix
   availability_zone       = "ap-northeast-2a"
   map_public_ip_on_launch = true
 
   tags = {
     Name    = "EDU-Public-Subnet-A"
-    Service = var.prefix
   }
 }
 
@@ -101,7 +100,7 @@ resource "aws_security_group" "EDU-SG" {
 resource "aws_instance" "EC2-EDU" {
   ami = "ami-0e17ad9abf7e5c818"
   instance_type = "t2.micro"
-  subnet_id = aws_vpc.EDU-VPC.subnet_id
+  # subnet_id = aws_vpc.EDU-VPC.subnet_id
 
   # network_interface {
   #   network_interface_id = aws_network_interface.foo.id
