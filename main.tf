@@ -12,7 +12,7 @@ provider "aws" {
   region  = "ap-northeast-2"
 }
 
-resource "aws_vpc" "${var.prefix}-VPC" {
+resource "aws_vpc" "EDU-VPC" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
 
@@ -23,7 +23,7 @@ resource "aws_vpc" "${var.prefix}-VPC" {
 }
 
 resource "aws_subnet" "public-subnet" {
-  vpc_id = aws_vpc.${var.prefix}-VPC.id
+  vpc_id = aws_vpc.EDU-VPC.id
   cidr_block = "10.0.1.0/24"
   availability_zone       = "ap-northeast-2a"
 
@@ -40,8 +40,8 @@ resource "aws_network_interface" "foo" {
   }
 }
 
-resource "aws_internet_gateway" "${var.prefix}-IGW" {
-  vpc_id = aws_vpc.${var.prefix}-VPC.id
+resource "aws_internet_gateway" "EDU-IGW" {
+  vpc_id = aws_vpc.EDU-VPC.id
 
   tags = {
     Name    = "${var.prefix}-IGW"
@@ -49,7 +49,7 @@ resource "aws_internet_gateway" "${var.prefix}-IGW" {
 }
 
 resource "aws_route_table" "Public-Route" {
-  vpc_id = aws_vpc.${var.prefix}-VPC.id
+  vpc_id = aws_vpc.EDU-VPC.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -74,10 +74,10 @@ resource "aws_subnet" "Public-A" {
   }
 }
 
-resource "aws_security_group" "${var.prefix}-SG" {
+resource "aws_security_group" "EDU-SG" {
   name = "${var.prefix}-security-group"
 
-  vpc_id = aws_vpc.${var.prefix}-VPC.id
+  vpc_id = aws_vpc.EDU-VPC.id
 
   ingress {
     from_port   = 22
@@ -98,20 +98,20 @@ resource "aws_security_group" "${var.prefix}-SG" {
   }
 }
 
-resource "aws_instance" "EC2-${var.prefix}" {
+resource "aws_instance" "EC2-EDU" {
   ami = "ami-0e17ad9abf7e5c818"
   instance_type = "t2.micro"
-  subnet_id = aws_vpc.${var.prefix}-VPC.subnet_id
+  subnet_id = aws_vpc.EDU-VPC.subnet_id
 
   # network_interface {
   #   network_interface_id = aws_network_interface.foo.id
   #   device_index         = 0
   # }
 
-  security_groups = [aws_security_group.${var.prefix}-SG.id]
+  security_groups = [aws_security_group.EDU-SG.id]
 
   tags = {
-    Name = "EC2-${var.prefix}"
+    Name = "EC2-EDU"
   }
 }
 
