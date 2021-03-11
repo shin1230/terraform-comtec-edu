@@ -41,7 +41,7 @@ resource "aws_network_interface" "foo" {
 
 resource "aws_instance" "EC2-EDU" {
   ami = "ami-05b616430d239765b"
-  instance_type = "t3.micro"
+  instance_type = "t2.micro"
 
   network_interface {
     network_interface_id = aws_network_interface.foo.id
