@@ -94,11 +94,10 @@ resource "aws_instance" "EC2-EDU" {
     device_index         = 0
   }
 
-  # vpc_security_group_ids = [aws_security_group.EDU-SG.id]
+  security_groups = [aws_security_group.EDU-SG.id]
 
   tags = {
     Name = "EC2-EDU"
   }
 }
-terraform plan -destroy -out=destroy.tfplan
 
