@@ -17,7 +17,7 @@ resource "aws_vpc" "EDU-VPC" {
   enable_dns_hostnames = true
 
   tags = {
-    Name    = "${var.prefix}-VPC"
+    Name    = "EDU-VPC"
   }
 
 }
@@ -44,7 +44,7 @@ resource "aws_internet_gateway" "EDU-IGW" {
   vpc_id = aws_vpc.EDU-VPC.id
 
   tags = {
-    Name    = "${var.prefix}-IGW"
+    Name    = "EDU-IGW"
   }
 }
 
@@ -57,7 +57,7 @@ resource "aws_route_table" "Public-Route" {
   }
 
   tags = {
-    Name    = "${var.prefix}-Public-Route"
+    Name    = "EDU-Public-Route"
   }
 }
 
@@ -69,7 +69,7 @@ resource "aws_subnet" "Public-A" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name    = "${var.prefix}-Public-Subnet-A"
+    Name    = "EDU-Public-Subnet-A"
     Service = var.prefix
   }
 }
@@ -94,7 +94,7 @@ resource "aws_security_group" "EDU-SG" {
   }
 
   tags = {
-    Name    = "${var.prefix}-SG"
+    Name    = "EDU-SG"
   }
 }
 
