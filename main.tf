@@ -53,7 +53,7 @@ resource "aws_route_table" "Public-Route" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.${var.prefix}-IGW.id
+    gateway_id = aws_internet_gateway.EDU-IGW.id
   }
 
   tags = {
@@ -75,7 +75,7 @@ resource "aws_subnet" "Public-A" {
 }
 
 resource "aws_security_group" "EDU-SG" {
-  name = "${var.prefix}-security-group"
+  name = "EDU-security-group"
 
   vpc_id = aws_vpc.EDU-VPC.id
 
