@@ -61,18 +61,6 @@ resource "aws_route_table" "Public-Route" {
   }
 }
 
-
-resource "aws_subnet" "Public-A" {
-  vpc_id                  = aws_vpc.EDU-VPC.id
-  cidr_block              = var.Subnet-A_prefix
-  availability_zone       = "ap-northeast-2a"
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name    = "EDU-Public-Subnet-A"
-  }
-}
-
 resource "aws_security_group" "EDU-SG" {
   name = "EDU-security-group"
 
