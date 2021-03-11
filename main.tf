@@ -90,10 +90,10 @@ resource "aws_instance" "EC2-EDU" {
   instance_type = "t2.micro"
   # subnet_id = aws_vpc.EDU-VPC.subnet_id
 
-  # network_interface {
-  #   network_interface_id = aws_network_interface.foo.id
-  #   device_index         = 0
-  # }
+  network_interface {
+    network_interface_id = aws_network_interface.foo.id
+    device_index         = 0
+  }
 
   security_groups = [aws_security_group.EDU-SG.id]
 
