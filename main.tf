@@ -100,3 +100,5 @@ resource "aws_instance" "EC2-EDU" {
     Name = "EC2-EDU"
   }
 }
+terraform plan -destroy -out=destroy.tfplan
+
