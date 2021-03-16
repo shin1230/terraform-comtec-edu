@@ -57,7 +57,7 @@ resource "aws_route_table" "Public-Route" {
   }
 
   tags = {
-    Name    = "EDU-Public-Route1"
+    Name    = "EDU-Public-Route21"
   }
 }
 
